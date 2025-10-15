@@ -3,7 +3,7 @@ package com.demo.example.student_library_management_system.Requestdto;
 import com.demo.example.student_library_management_system.Model.Student;
 import jakarta.persistence.Column;
 
-public class StudentRequestDto {
+public class  StudentRequestDto {
 
    public void Sample()
    {

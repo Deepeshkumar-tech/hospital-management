@@ -1,12 +1,20 @@
 package com.demo.example.student_library_management_system.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
 @Entity
 @Table(name="student")
 
-public class Student {
+public class Student
+{
+    //jason backreference---for joincolumn
+    //jasonmanage reference  for mapped by
+
+
+
+
 
     @Id
     @Column(name="id",nullable = false)
@@ -38,6 +46,7 @@ public class Student {
      private String dept;
 
 //relating both table to each other
+    @JsonManagedReference
     @OneToOne(mappedBy="student",cascade=CascadeType.ALL)
     private Card card;
 

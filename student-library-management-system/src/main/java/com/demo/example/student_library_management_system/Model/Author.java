@@ -1,5 +1,6 @@
 package com.demo.example.student_library_management_system.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class Author
 
 
     //creating relation between author and book table and making foreign key in book table
+
+       @JsonManagedReference
        @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
        private List<Book> bookByAuthor=new ArrayList<>();
 

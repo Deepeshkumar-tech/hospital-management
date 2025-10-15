@@ -6,7 +6,7 @@ import com.demo.example.student_library_management_system.Requestdto.StudentRequ
 public class StudentConverter {
 
     //converter--- it converts coming input request into model and Entity which represents database
-    //like it converts StudentRequedtDto into Student model class
+    //like it converts StudentRequesttDto into Student model class
 
     public static Student StudentRequestDtoToStudent(StudentRequestDto studentRequestDto)
     {

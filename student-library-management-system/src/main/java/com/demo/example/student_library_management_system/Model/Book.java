@@ -1,6 +1,8 @@
 package com.demo.example.student_library_management_system.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -35,16 +37,18 @@ public class Book
 
     //creating relation between author and book table and making foreign key in book table
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn  //creates foreign key in this table book
     private Author author;
 
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn
     private Card card;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL)
     private List <Transaction> transactions=new ArrayList<>() ;
 

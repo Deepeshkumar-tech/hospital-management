@@ -1,0 +1,11 @@
+package com.demo.example.student_library_management_system.Repository;
+
+import com.demo.example.student_library_management_system.Model.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class TransactionRepository implements JpaRepository<Transaction, Integer> {
+
+
+}
