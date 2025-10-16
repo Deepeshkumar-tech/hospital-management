@@ -5,6 +5,8 @@ import com.demo.example.student_library_management_system.Model.Student;
 import com.demo.example.student_library_management_system.Requestdto.StudentRequestDto;
 import com.demo.example.student_library_management_system.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,27 +18,43 @@ public class StudentController
 
     @Autowired
     StudentService studentService;
+         //adding respoonse entity
 
        @PostMapping("/save")
-     public String saveStudent(@RequestBody StudentRequestDto studentRequestDto)
+     public ResponseEntity<?> saveStudent(@RequestBody StudentRequestDto studentRequestDto)
     {
-          Student response=studentService.addStudent(studentRequestDto);
-          return response;
+        try
+        {
+            Student response = studentService.addStudent(studentRequestDto);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e)
+        {
+
+            return  ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
     }
 
       @GetMapping("/find/{id}")
-     public Student findStudentById(@PathVariable int id )
+     public ResponseEntity<?> findStudentById(@PathVariable int id )
     {
-       Student student=studentService.getStudentById(id);
-       return student;
+        try
+        {
+            Student student = studentService.getStudentById(id);
+            return ResponseEntity.ok(student);
+        } catch (Exception e)
+        {
 
+            return RequestEntity.internalServerError().body(e.getMessage());
+        }
     }
 
         @GetMapping("/findAll")
-      public List <Student>  findAllStudent()
+      public ResponseEntity<?> findAllStudent()
       {
         List <Student> studentList=studentService.getAllStudent();
-        return studentList;
+        return ResponseEntity.ok(studentList);
 
       }
 
@@ -74,5 +92,53 @@ public class StudentController
              return response;
 
           }
+              @GetMapping("/findByPage")
+              public  List<Student> findStudentsBasedOnPage(@RequestParam int pageNo,@RequestParam int pageSize)
+              {
+                 List<Student>studentList=studentService.getStudentsBasedOnPage(pageNo,pageSize);
+                 return studentList;
+
+              }
+                @GetMapping("/findByMail")
+              public Student findStudentByEmail (String email)
+              {
+                 Student student=studentService.getStudentByEmail(@RequestParam email);
+                 return student;
+              }
+                 @GetMapping("/findByEmailOrDept")
+               public List<Student> findStudentByEmailOrDept (String email, String dept)
+               {
+
+                   List<Student>studentList =studentService.getStudentByEmailOrDept (email,dept);
+                   return studentList;
+               }
+                 @GetMapping("/findByDept")
+                public List<Student> findStudentByDept(String dept)
+                {
+
+                    List<Student>studentList =studentService.getStudendByDept(dept);
+                    return studentList;
+                }
+
+                //adding response entity in above apis
+                 //responseentity---takes response from API and send it to the frontend like
+                 //respoponse code ;http code:
+                    //200-ok -success
+                    //201--created
+                    //400-bad request
+                    //401-unauthorised
+                   //404- not found
+                   //500-internal server error
+
+                  //adding exeption handling in above apis
+
+
+
+
+
+
+
+
+
 
 }

@@ -7,6 +7,9 @@ import com.demo.example.student_library_management_system.Model.Student;
 import com.demo.example.student_library_management_system.Repository.StudentRepository;
 import com.demo.example.student_library_management_system.Requestdto.StudentRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +48,11 @@ public class StudentService {
                {
 
                    Optional<Student> studentOptional=studentRepository.findById(id);
-                   studentOptional.get();
+                     studentOptional.get();
+                   if(!studentOptional.isPresent())
+                   {
+                         throw new RuntimeException("student is not found  with this id "+id);
+                   }
                    return  studentOptional.get();
                }
 
@@ -68,10 +75,10 @@ public class StudentService {
 
              }
 
-             public String updateStudentById(int id , String mobile) {
+             public String updateStudentById(StudentRequestDto  studentRequestDto) {
                  //first to check student  id present or not if present then update otherwise not
 
-                 Student student = studentRepository.getStudentById(id, mobile);
+                 Student student = studentRepository.getStudentById(int id );
 
                  if (student != null) {
                      //update
@@ -97,14 +104,12 @@ public class StudentService {
 
 
 
-                 public String updateStudentByPatch(int id ,Sting mobile )
-                 {
+                 public String updateStudentByPatch(int id ,Sting mobile ) {
                      //first to check student  id present or not if present then update otherwise not
 
-                     Student student=studentRepository.getStudentById( id );
+                     Student student = studentRepository.getStudentById(id);
 
-                     if(student!=null)
-                     {
+                     if (student != null) {
                          //update
 
 
@@ -116,15 +121,62 @@ public class StudentService {
                          studentRepository.save(student);
                          return "student is updated successfull";
 
-                     }
-                     else
-                     {
+                     } else {
                          //not update
                          return " Sttudent can be updated because student is not getting ";
                      }
 
 
+                     //pagination and sorting
+                     public List<Student> getStudentsBasedOnPage ( int pageNo, int pageSize)
+                     {
+
+                         Page<Student> studentPage = studentRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(...
+                         properties:
+                         "name")));
+                         //we have to convert page into list so that we can see on front end easily
+                         List<Student> studentList = studentPage.getContent();
+                         return studentList;
+
+                     }
+
+
+                     public Student getStudentByEmail (String email);
+
+                     {
+                         Student student = studentRepository.findByEmail(email);
+                         return student;
+                     }
+
+                     public List<Student> getStudentByEmailOrDept (String email, String dept)
+                     {
+                           List<Student>studentList=studentRepository.findByEmailOrDept(email,dept);
+                           return studentList;
+                     }
+
+                     public List<Student> getStudendByDept(String dept)
+                     {
+                          List<Student> studentList=studentRepository.findStudentByQuery(dept);
+                          return studentList;
+                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                  }
+
 
 
 
