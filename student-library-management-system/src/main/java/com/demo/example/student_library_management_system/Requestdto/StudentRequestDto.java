@@ -10,7 +10,6 @@ public class  StudentRequestDto {
        Student student=new Student();
        student.getId();
        student.getName();
-       student.setId(123);
 
    }
 
@@ -19,13 +18,26 @@ public class  StudentRequestDto {
     //DTO-data tansfer object-it is taken for input request fields
 
 
+
+
+    private int id;
     private String name;
     private String email;
     private String mobile;
     private String dob;
     private String gender;
     private String dept;
-    private String address;
+
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -76,11 +88,5 @@ public class  StudentRequestDto {
         this.dept = dept;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

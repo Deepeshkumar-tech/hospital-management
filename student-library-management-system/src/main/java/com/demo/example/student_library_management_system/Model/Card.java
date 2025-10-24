@@ -35,9 +35,9 @@ public class Card {
 
 
     //connecting both tables with each other
-    @JsonManagedReference
+
     @JsonBackReference
-    @OneToOne(mappedBy = "card")
+    @OneToOne
     @JoinColumn  //this creates foreign key of Student table in card table
     private Student student;
 

@@ -18,107 +18,100 @@ public class StudentController
 
     @Autowired
     StudentService studentService;
-         //adding respoonse entity
+    //adding response entity
 
-       @PostMapping("/save")
-     public ResponseEntity<?> saveStudent(@RequestBody StudentRequestDto studentRequestDto)
-    {
-        try
-        {
-            Student response = studentService.addStudent(studentRequestDto);
-            return ResponseEntity.ok(response);
+      @PostMapping("/save")
+      public String saveStudent(@RequestBody StudentRequestDto studentRequestDto)
+      {
 
-        } catch (Exception e)
-        {
 
-            return  ResponseEntity.internalServerError().body(e.getMessage());
-        }
+            String response = studentService.addStudent(studentRequestDto);
+            return response;
 
-    }
+      }
 
       @GetMapping("/find/{id}")
-     public ResponseEntity<?> findStudentById(@PathVariable int id )
-    {
-        try
-        {
-            Student student = studentService.getStudentById(id);
-            return ResponseEntity.ok(student);
-        } catch (Exception e)
-        {
+      public Student findStudentById(@PathVariable int id )
+       {
 
-            return RequestEntity.internalServerError().body(e.getMessage());
-        }
-    }
+          Student student = studentService.getStudentById(id);
+            return student;
 
-        @GetMapping("/findAll")
-      public ResponseEntity<?> findAllStudent()
-      {
-        List <Student> studentList=studentService.getAllStudent();
-        return ResponseEntity.ok(studentList);
-
-      }
-
-      @GetMapping("/count")
-      public String countStudents()
-      {
-         Student response=studentService.countStudents();
-         return response;
-      }
-
-       @GetMapping("/delete/{id}")
-        public String deleteStudentById(@PathVariable int id) {
-           Student response = studentService.deleteStudentById(id);
-           return response;
 
 
        }
-         @PutMapping ("/update/{id}")
-        public String updateStudentById(@PathVariable int id ,  @RequestBody StudentRequestDto studentRequestDto)
-         {
 
-            String response=studentService.updateStudentById(id);
-            return response;
+        @GetMapping("/findAll")
+       public List<Student> findAllStudent()
+        {
+        List<Student>studentList=studentService.getAllStudent();
+        return studentList;
 
+        }
 
-         }
+        @GetMapping("/count")
+        public String countStudents()
+        {
+         String response=studentService.countStudents();
+         return response;
+        }
 
-            @PatchMapping ("/updatePatch/{id}")
-
-               //@RequestParam=it takes request as query parameter
-            public String updateStudentMobileByPatch(@PathVariable int id ,@RequestParam String mobile);
-          {
-
-             String response=studentService.updateStudentByPatch(id,mobile);
-             return response;
-
-          }
-              @GetMapping("/findByPage")
-              public  List<Student> findStudentsBasedOnPage(@RequestParam int pageNo,@RequestParam int pageSize)
-              {
-                 List<Student>studentList=studentService.getStudentsBasedOnPage(pageNo,pageSize);
-                 return studentList;
-
-              }
-                @GetMapping("/findByMail")
-              public Student findStudentByEmail (String email)
-              {
-                 Student student=studentService.getStudentByEmail(@RequestParam email);
-                 return student;
-              }
-                 @GetMapping("/findByEmailOrDept")
-               public List<Student> findStudentByEmailOrDept (String email, String dept)
-               {
-
-                   List<Student>studentList =studentService.getStudentByEmailOrDept (email,dept);
-                   return studentList;
-               }
-                 @GetMapping("/findByDept")
-                public List<Student> findStudentByDept(String dept)
-                {
-
-                    List<Student>studentList =studentService.getStudendByDept(dept);
-                    return studentList;
-                }
+//      @DeleteMapping("/delete/{id}")
+//       public Student deleteStudentById(@PathVariable int id)
+//          {
+//
+//           Student response = studentService.deleteStudentById(id);
+//          return response;
+//
+//
+//          }
+//         @PutMapping ("/update/{id}")
+//        public String updateStudentById(@PathVariable int id , @RequestBody StudentRequestDto studentRequestDto)
+//         {
+//
+//            Student response=studentService.updateStudentById(id);
+//            return response;
+//
+//
+//         }
+//
+//            @PatchMapping("/updatePatch/{id}")
+//
+//               //@RequestParam=it takes request as query parameter
+//            public String updateStudentMobileByPatch(@PathVariable int id ,@RequestParam String mobile)
+//          {
+//
+//             Student response=studentService.updateStudentByPatch(id,mobile);
+//             return response;
+//
+//          }
+//              @GetMapping("/findByPage")
+//              public  List<Student> findStudentBasedOnPage(@RequestParam int pageNo,@RequestParam int pageSize)
+//              {
+//                 List<Student>studentList=studentService.getClass(pageNo,pageSize);
+//                 return studentList;
+//
+//              }
+//                @GetMapping("/findByMail")
+//              public Student findStudentByEmail(@RequestParam String email)
+//              {
+//                 Student studentemail=studentService.getStudentByEmail1(email);
+//                 return studentemail;
+//              }
+//                 @GetMapping("/findByEmailOrDept")
+//               public List<Student> findStudentByEmailOrDept (String email, String dept)
+//               {
+//
+//                   List<Student>studentList =studentService.getStudentByEmailOrDept (email,dept);
+//                   return studentList;
+//               }
+//                 @GetMapping("/findByDept")
+//                public List<Student> findStudentByDept(String dept)
+//                {
+//
+//                    List<Student>studentList =studentService.getStudendByDept(dept);
+//                    return studentList;
+//                }
 
                 //adding response entity in above apis
                  //responseentity---takes response from API and send it to the frontend like

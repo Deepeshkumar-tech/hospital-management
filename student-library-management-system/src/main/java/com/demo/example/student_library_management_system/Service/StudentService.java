@@ -7,6 +7,7 @@ import com.demo.example.student_library_management_system.Model.Student;
 import com.demo.example.student_library_management_system.Repository.StudentRepository;
 import com.demo.example.student_library_management_system.Requestdto.StudentRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.codec.StringDecoder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,8 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class StudentService {
+ @Service
+ public class StudentService
+ {
 
        @Autowired
       private StudentRepository studentRepository;
@@ -36,8 +38,8 @@ public class StudentService {
             card.setCardStatus("Active");
 
 
-            student.setCard(card);
-            card.setStudent(student);
+           // student.setCard(card);
+           // card.setStudent(student);
 
             studentRepository.save(student);
             return "Student is saved  successfully";
@@ -68,99 +70,98 @@ public class StudentService {
                    return "Total no of students"+Count;
                }
 
-             public Student deleteStudentById(int id)
-             {
-                 Student student = studentRepository.deleteById(id);
-                 return "Student is deleted by is id" + id +"successfully";
+//            public Student deleteStudentById(int id)
+//            {
+//             String student1 = studentRepository.deleteById(id);
+//                //return "Student is deleted by is id successfully";
+//            }
 
-             }
-
-             public String updateStudentById(StudentRequestDto  studentRequestDto) {
-                 //first to check student  id present or not if present then update otherwise not
-
-                 Student student = studentRepository.getStudentById(int id );
-
-                 if (student != null) {
-                     //update
-
-                     student.setName(studentRequestDto.getName());
-                     student.setEmail(studentRequestDto.getEmail());
-                     student.setMobile(studentRequestDto.getMobile());
-                     student.setDob(studentRequestDto.getDob());
-                     student.setGender(studentRequestDto.getGender());
-                     student.setDept(studentRequestDto.getDept());
-
-                     //After udating students variables
-
-                     studentRepository.save(student);
-                     return "student is updated successfull";
-
-                 } else {
-                     //not update
-                     return " Sttudent can be updated because student is not getting ";
-                 }
-             }
-
-
-
-
-                 public String updateStudentByPatch(int id ,Sting mobile ) {
-                     //first to check student  id present or not if present then update otherwise not
-
-                     Student student = studentRepository.getStudentById(id);
-
-                     if (student != null) {
-                         //update
+//             public  String updateStudentById(StudentRequestDto  studentRequestDto)
+//             {
+//
+//                 //first to check student  id present or not if present then update otherwise not
+//
+//                 Student student =studentRepository.getById(int id,);
+//
+//                 if (student != null)
+//                 {
+//                     //update
+//
+//                     student.setName(studentRequestDto.getName());
+//                     student.setEmail(studentRequestDto.getEmail());
+//                     student.setMobile(studentRequestDto.getMobile());
+//                     student.setDob(studentRequestDto.getDob());
+//                     student.setGender(studentRequestDto.getGender());
+//                     student.setDept(studentRequestDto.getDept());
+//
+//                     //After udating students variables
+//
+//                     studentRepository.save(student);
+//                     return "student is updated successful";
+//
+//                 } else {
+//                     //not update
+//                     return " Student can be updated because student is not getting ";
+//                 }
+//             }
 
 
-                         student.setMobile(mobile);
 
 
-                         //After udating students variables
+//                 public String updateStudentByPatch(int id ,String mobile ) {
+//                     //first to check student  id present or not if present then update otherwise not
+//
+//                     Student student=studentRepository.getReferenceById(id);
+//
+//                     if(student != null)
+//                     {
+//                         //update
+//
+//                         student.setMobile(mobile);
+//
+//                         //After udating students variables
+//                         studentRepository.save(student);
+//                         return "student is updated successful";
+//
+//                     } else
+//                     {
+//                         //not update
+//                         return " Student can be updated because student is not getting ";
+//                     }
+//                 }
 
-                         studentRepository.save(student);
-                         return "student is updated successfull";
+//                    // pagination and sorting
 
-                     } else {
-                         //not update
-                         return " Sttudent can be updated because student is not getting ";
-                     }
-
-
-                     //pagination and sorting
-                     public List<Student> getStudentsBasedOnPage ( int pageNo, int pageSize)
-                     {
-
-                         Page<Student> studentPage = studentRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(...
-                         properties:
-                         "name")));
-                         //we have to convert page into list so that we can see on front end easily
-                         List<Student> studentList = studentPage.getContent();
-                         return studentList;
-
-                     }
+//                    public List<Student> getStudentBasedOnPage(int pageNo,int pageSize)
+//                    {
+//
+//                         Page<Student> studentPage = studentRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(...
+//                         properties:
+//                         "name")))
+//                         //we have to convert page into list so that we can see on front end easily
+//                         List<Student> studentList = studentPage.getContent();
+//                         return studentList;
+//
+//                    }
 
 
-                     public Student getStudentByEmail (String email);
+                         public Student getStudentByEmail1(String email)
+                        {
+                        Student studentemail = studentRepository.findByEmail(email);
+                         return studentemail;
+                       }
 
-                     {
-                         Student student = studentRepository.findByEmail(email);
-                         return student;
-                     }
-
-                     public List<Student> getStudentByEmailOrDept (String email, String dept)
-                     {
+                         public List<Student>getStudentByEmailOrDept(String email, String dept)
+                        {
                            List<Student>studentList=studentRepository.findByEmailOrDept(email,dept);
                            return studentList;
-                     }
+                        }
 
-                     public List<Student> getStudendByDept(String dept)
-                     {
-                          List<Student> studentList=studentRepository.findStudentByQuery(dept);
-                          return studentList;
-                     }
-
-
+//                        public List<Student> getStudendByDept(String dept)
+//                       {
+//                          List<Student> studentList=studentRepository.findStudentByQuery(dept);
+//                          return studentList;
+//                       }
 
 
 
@@ -175,7 +176,9 @@ public class StudentService {
 
 
 
-                 }
+
+
+
 
 
 

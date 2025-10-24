@@ -13,9 +13,6 @@ public class Student
     //jasonmanage reference  for mapped by
 
 
-
-
-
     @Id
     @Column(name="id",nullable = false)
     @GeneratedValue(strategy =GenerationType.IDENTITY)
